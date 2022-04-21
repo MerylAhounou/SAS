@@ -1,103 +1,101 @@
-/* Projet SAS 2020-2021 / Magistère 2 
-
-AHOUNOU Méryl & BENDAO Chalom & KEVORKIAN Amandine 
+/* Projet SAS 2020-2021 / MagistÃ¨re 2 
 
 PARTIE 1 : SAS SQL */
 
-/* 1- Dans une librairie nommée « projet », créez les tables 
-suivantes en vous servant des fichiers du projet. Utilisez « l’étape DATA »
-combinée avec les instructions INFILE et INPUT. */
-libname Projet "C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de données";/*création de la librairie projet*/
-options yearcutoff=1900;/*remplacement de l'année de référence de SAS 1960 par 1900*/
+/* 1- Dans une librairie nommÃ©e Â« projet Â», crÃ©ez les tables 
+suivantes en vous servant des fichiers du projet. Utilisez Â« lâ€™Ã©tape DATA Â»
+combinÃ©e avec les instructions INFILE et INPUT. */
+libname Projet "C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de donnÃ©es";/*crÃ©ation de la librairie projet*/
+options yearcutoff=1900;/*remplacement de l'annÃ©e de rÃ©fÃ©rence de SAS 1960 par 1900*/
 
-/* « ACCOUNT » */
-data Projet.ACCOUNT;/*création de la table account dans la librairie projet*/
-	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de données\account.txt' dsd delimiter=';' firstobs=2;/*on indique le fichier à partir duquel on souhaite créer la table, 
-	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spécifier le charactère qui sépare les différentes colonnes et l'option firsobs qui permet d'indiquer la 
-	première observation de notre table*/
-	input account_id: 10. district_id frequency: $50. date: yymmdd10.;/*on indique les différentes colonnes de notre table et leurs formats*/
+/* Â« ACCOUNT Â» */
+data Projet.ACCOUNT;/*crÃ©ation de la table account dans la librairie projet*/
+	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de donnÃ©es\account.txt' dsd delimiter=';' firstobs=2;/*on indique le fichier Ã  partir duquel on souhaite crÃ©er la table, 
+	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spÃ©cifier le charactÃ¨re qui sÃ©pare les diffÃ©rentes colonnes et l'option firsobs qui permet d'indiquer la 
+	premiÃ¨re observation de notre table*/
+	input account_id: 10. district_id frequency: $50. date: yymmdd10.;/*on indique les diffÃ©rentes colonnes de notre table et leurs formats*/
 	format date yymmdd10.;/*on affiche la date au format yymmdd10.*/
 run;
 
-/* « CARD » */
-data PROJET.CARD;/*création de la table card dans la librairie projet*/
-	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de données\card.txt' dsd delimiter=';' firstobs=2;/*on indique le fichier à partir duquel on souhaite créer la table, 
-	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spécifier le charactère qui sépare les différentes colonnes et l'option firsobs qui permet d'indiquer la 
-	première observation de notre table*/
-	input card_id disp_id type:$10. issued: $15.; /*on indique les différentes colonnes de notre table et leurs formats*/
-	issued_corr= input(substr(issued,1,6),yymmdd10.);/*on crée la colonne issued_corr en récupérant les 6 premiers charatères de issued qu'on met au format yymmdd10*/
+/* Â« CARD Â» */
+data PROJET.CARD;/*crÃ©ation de la table card dans la librairie projet*/
+	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de donnÃ©es\card.txt' dsd delimiter=';' firstobs=2;/*on indique le fichier Ã  partir duquel on souhaite crÃ©er la table, 
+	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spÃ©cifier le charactÃ¨re qui sÃ©pare les diffÃ©rentes colonnes et l'option firsobs qui permet d'indiquer la 
+	premiÃ¨re observation de notre table*/
+	input card_id disp_id type:$10. issued: $15.; /*on indique les diffÃ©rentes colonnes de notre table et leurs formats*/
+	issued_corr= input(substr(issued,1,6),yymmdd10.);/*on crÃ©e la colonne issued_corr en rÃ©cupÃ©rant les 6 premiers charatÃ¨res de issued qu'on met au format yymmdd10*/
 	format issued_corr yymmdd10.;
 run;
 
-/* « CLIENT » */
-data Projet.CLIENT;/*création de la table client dans la librairie projet*/
-	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de données\client.txt' dsd delimiter=';' firstobs=2;/*on indique le fichier à partir duquel on souhaite créer la table, 
-	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spécifier le charactère qui sépare les différentes colonnes et l'option firsobs qui permet d'indiquer la 
-	première observation de notre table*/
-	input client_id birth_number:$8. district_id; /*on indique les différentes colonnes de notre table et leurs formats*/
-	t = substr(birth_number,3,2);/*on crée une variable t qui récupère les valeurs du mois dans birth_number*/
-	attrib sex format=$1.;/*on crée la variable sex alphanumérique avec taille 1*/
-	attrib birth format=$8.;/*on crée la variable birth avec taille 8 et alphanumérique*/
+/* Â« CLIENT Â» */
+data Projet.CLIENT;/*crÃ©ation de la table client dans la librairie projet*/
+	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de donnÃ©es\client.txt' dsd delimiter=';' firstobs=2;/*on indique le fichier Ã  partir duquel on souhaite crÃ©er la table, 
+	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spÃ©cifier le charactÃ¨re qui sÃ©pare les diffÃ©rentes colonnes et l'option firsobs qui permet d'indiquer la 
+	premiÃ¨re observation de notre table*/
+	input client_id birth_number:$8. district_id; /*on indique les diffÃ©rentes colonnes de notre table et leurs formats*/
+	t = substr(birth_number,3,2);/*on crÃ©e une variable t qui rÃ©cupÃ¨re les valeurs du mois dans birth_number*/
+	attrib sex format=$1.;/*on crÃ©e la variable sex alphanumÃ©rique avec taille 1*/
+	attrib birth format=$8.;/*on crÃ©e la variable birth avec taille 8 et alphanumÃ©rique*/
 
-	if t < 13 then/*on vérifie si la valeur du mois est inférieur à 13*/
-		do;/*si oui, on affecte à la variable sex la valeur M et la variable birth la valeur de birth_number*/
+	if t < 13 then/*on vÃ©rifie si la valeur du mois est infÃ©rieur Ã  13*/
+		do;/*si oui, on affecte Ã  la variable sex la valeur M et la variable birth la valeur de birth_number*/
 			sex = 'M';
 			birth =birth_number;
 		end;
-		else do;/*si non, on affecte à la variable sex la valeur F et la variable birth la valeur de birth_number-5000 afin de retirer les 50 ajouter aux mois pour les femmes*/
+		else do;/*si non, on affecte Ã  la variable sex la valeur F et la variable birth la valeur de birth_number-5000 afin de retirer les 50 ajouter aux mois pour les femmes*/
 			sex = 'F';
 			birth =birth_number-5000;
 		end;
 
-	birth_corr =input(birth,yymmdd10.);/*on crée la colonne birth_corr à partir de birth au format yymmdd10*/
+	birth_corr =input(birth,yymmdd10.);/*on crÃ©e la colonne birth_corr Ã  partir de birth au format yymmdd10*/
 	format birth_corr yymmdd10.;
 	drop t birth;/*on supprime les variables t et birth dont on n'a plus besoin*/
 run;
 
-/* « DISP » */
-data Projet.DISP;/*création de la table disp dans la librairie projet*/
-	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de données\disp.txt' dsd delimiter=';' firstobs=2;/*on indique le fichier à partir duquel on souhaite créer la table, 
-	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spécifier le charactère qui sépare les différentes colonnes et l'option firsobs qui permet d'indiquer la 
-	première observation de notre table*/
-	input disp_id client_id account_id type:$9.;/*on indique les différentes colonnes de notre table et leurs formats*/
+/* Â« DISP Â» */
+data Projet.DISP;/*crÃ©ation de la table disp dans la librairie projet*/
+	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de donnÃ©es\disp.txt' dsd delimiter=';' firstobs=2;/*on indique le fichier Ã  partir duquel on souhaite crÃ©er la table, 
+	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spÃ©cifier le charactÃ¨re qui sÃ©pare les diffÃ©rentes colonnes et l'option firsobs qui permet d'indiquer la 
+	premiÃ¨re observation de notre table*/
+	input disp_id client_id account_id type:$9.;/*on indique les diffÃ©rentes colonnes de notre table et leurs formats*/
 run;
 
-/* « DISTRICT » */
-data Projet.DISTRICT;/*création de la table district dans la librairie projet*/
-	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de données\district.txt' dsd delimiter=';' firstobs=2;/*on indique le fichier à partir duquel on souhaite créer la table, 
-	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spécifier le charactère qui sépare les différentes colonnes et l'option firsobs qui permet d'indiquer la 
-	première observation de notre table*/
-	input district_id district_name:$30. region:$30. A4 A5 A6 A7 A8 A9 A10 A11 A12 A13 A14 A15 A16;/*on indique les différentes colonnes de notre table et leurs formats*/
+/* Â« DISTRICT Â» */
+data Projet.DISTRICT;/*crÃ©ation de la table district dans la librairie projet*/
+	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de donnÃ©es\district.txt' dsd delimiter=';' firstobs=2;/*on indique le fichier Ã  partir duquel on souhaite crÃ©er la table, 
+	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spÃ©cifier le charactÃ¨re qui sÃ©pare les diffÃ©rentes colonnes et l'option firsobs qui permet d'indiquer la 
+	premiÃ¨re observation de notre table*/
+	input district_id district_name:$30. region:$30. A4 A5 A6 A7 A8 A9 A10 A11 A12 A13 A14 A15 A16;/*on indique les diffÃ©rentes colonnes de notre table et leurs formats*/
 run;
 
-/* « LOAN » */
-data Projet.LOAN;/*création de la table loan dans la librairie projet*/
-	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de données\loan.txt' dsd delimiter=';' firstobs=2;/*on indique le fichier à partir duquel on souhaite créer la table, 
-	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spécifier le charactère qui sépare les différentes colonnes et l'option firsobs qui permet d'indiquer la 
-	première observation de notre table*/
-	input loan_id account_id date: yymmdd10. amount duration payments status:$1.;/*on indique les différentes colonnes de notre table et leurs formats*/
+/* Â« LOAN Â» */
+data Projet.LOAN;/*crÃ©ation de la table loan dans la librairie projet*/
+	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de donnÃ©es\loan.txt' dsd delimiter=';' firstobs=2;/*on indique le fichier Ã  partir duquel on souhaite crÃ©er la table, 
+	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spÃ©cifier le charactÃ¨re qui sÃ©pare les diffÃ©rentes colonnes et l'option firsobs qui permet d'indiquer la 
+	premiÃ¨re observation de notre table*/
+	input loan_id account_id date: yymmdd10. amount duration payments status:$1.;/*on indique les diffÃ©rentes colonnes de notre table et leurs formats*/
 	format date yymmdd10.;
 run;
 
-/* « ORDER » */
-data Projet.ORDER;/*création de la table order dans la librairie projet*/
-	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de données\order.txt'  dsd delimiter=';' firstobs=2;/*on indique le fichier à partir duquel on souhaite créer la table, 
-	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spécifier le charactère qui sépare les différentes colonnes et l'option firsobs qui permet d'indiquer la 
-	première observation de notre table*/
-	input order_id account_id bank_to:$upcase2. account_to:$8. amount:numx5.2 k_symbol:$upcase10.;/*on indique les différentes colonnes de notre table et leurs formats*/
+/* Â« ORDER Â» */
+data Projet.ORDER;/*crÃ©ation de la table order dans la librairie projet*/
+	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de donnÃ©es\order.txt'  dsd delimiter=';' firstobs=2;/*on indique le fichier Ã  partir duquel on souhaite crÃ©er la table, 
+	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spÃ©cifier le charactÃ¨re qui sÃ©pare les diffÃ©rentes colonnes et l'option firsobs qui permet d'indiquer la 
+	premiÃ¨re observation de notre table*/
+	input order_id account_id bank_to:$upcase2. account_to:$8. amount:numx5.2 k_symbol:$upcase10.;/*on indique les diffÃ©rentes colonnes de notre table et leurs formats*/
 run;
 
-/* « TRANS » */
-data Projet.TRANS;/*création de la table trans dans la librairie projet*/
-	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de données\trans.txt'  dsd delimiter=';' firstobs=2;/*on indique le fichier à partir duquel on souhaite créer la table, 
-	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spécifier le charactère qui sépare les différentes colonnes et l'option firsobs qui permet d'indiquer la 
-	première observation de notre table*/
-	input trans_id account_id date:yymmdd10. type:$upcase10. operation:$upcase10. amount balance k_symbol:$upcase10. bank:$upcase2. account:$8.;/*on indique les différentes colonnes de notre table et leurs formats*/
+/* Â« TRANS Â» */
+data Projet.TRANS;/*crÃ©ation de la table trans dans la librairie projet*/
+	infile 'C:\Users\ahoun\Documents\Cours\Semestre 2\SAS\Projet\Fichiers de donnÃ©es\trans.txt'  dsd delimiter=';' firstobs=2;/*on indique le fichier Ã  partir duquel on souhaite crÃ©er la table, 
+	avec l'option dsd qui permet de tenir compte des quotes, l'option delimiter pour spÃ©cifier le charactÃ¨re qui sÃ©pare les diffÃ©rentes colonnes et l'option firsobs qui permet d'indiquer la 
+	premiÃ¨re observation de notre table*/
+	input trans_id account_id date:yymmdd10. type:$upcase10. operation:$upcase10. amount balance k_symbol:$upcase10. bank:$upcase2. account:$8.;/*on indique les diffÃ©rentes colonnes de notre table et leurs formats*/
 	format date yymmdd10.;
 run;
 
-/* 3- Ecrivez le programme SAS qui permet d’obtenir le nombre de client par district et sexe. Ordonnez par 
-l’identifiant du district. */
+/* 3- Ecrivez le programme SAS qui permet dâ€™obtenir le nombre de client par district et sexe. Ordonnez par 
+lâ€™identifiant du district. */
 proc sql;
 	select district_id as di label = "Identifiant du district", sex as s label="Sexe du client", 
 		count(client_id) as nb label="Nombre de client"
@@ -107,7 +105,7 @@ proc sql;
 	;
 quit;
 
-/* 4- Réécrivez le programme précédent en y rajoutant le nom et la région du district, exactement comme ci-dessous. */
+/* 4- RÃ©Ã©crivez le programme prÃ©cÃ©dent en y rajoutant le nom et la rÃ©gion du district, exactement comme ci-dessous. */
 proc sql;
 	select distinct c.district_id as di label = "Identifiant du district", d.district_name as dn label="Nom du district",
 		d.region as Region , c.sex as s label="Sexe du client", count(c.client_id) as nc label="Nombre de client"
@@ -118,8 +116,8 @@ proc sql;
 	;
 quit;
 
-/* 5- Ecrivez le programme SAS qui affiche les districts qui ont un nombre total de clients supérieur à 100, en 
-précisant les caractéristiques du district, le nombre de femmes et le nombre d’hommes. */
+/* 5- Ecrivez le programme SAS qui affiche les districts qui ont un nombre total de clients supÃ©rieur Ã  100, en 
+prÃ©cisant les caractÃ©ristiques du district, le nombre de femmes et le nombre dâ€™hommes. */
 proc sql;
 	select distinct c.district_id as di label = "Identifiant du district", d.district_name as dn label="Nom du district",
 		d.region as Region, count(c.client_id) as ntc label="Nombre total de clients", 
@@ -133,8 +131,8 @@ proc sql;
 	;
 quit;
 
-/*6- Ecrivez le programme SAS qui affiche le nombre d’ordres pour les clients qui possèdent au moins un compte. 
-Affichez par ordre croissant d’âge des clients au 01-01-2010. */
+/*6- Ecrivez le programme SAS qui affiche le nombre dâ€™ordres pour les clients qui possÃ¨dent au moins un compte. 
+Affichez par ordre croissant dâ€™Ã¢ge des clients au 01-01-2010. */
 proc sql;
 	select  ceil(yrdif(c.birth_corr,mdy(01,01,2010),'AGE')) as age label="Age des clients", 
 		count(distinct c.client_id) as nc label="Nombre de clients",
@@ -149,19 +147,19 @@ proc sql;
 quit;
 
 
-/*7- Par type de carte de crédit, affichez le nombre de compte ayant bénéficié d’un prêt, le montant et durée 
-minimum, moyen et maximum du prêt; ainsi que le nombre de d’emprunt par statut.*/
+/*7- Par type de carte de crÃ©dit, affichez le nombre de compte ayant bÃ©nÃ©ficiÃ© dâ€™un prÃªt, le montant et durÃ©e 
+minimum, moyen et maximum du prÃªt; ainsi que le nombre de dâ€™emprunt par statut.*/
 proc sql;
 	select c.type as type,count(l.account_id) as nce label="Nombre de compte avec un emprunt",min(l.amount) as mmie 
 		label="Montant minimum des emprunts" format=dollar10., 
 		mean(l.amount) as mmee label="Montant moyen des emprunts" format=dollar10.,
 		max(l.amount) as mmae label="Montant maximum des emprunts" format=dollar10.,min(l.duration) as mmid 
-		label="Durée minimum des emprunts", mean(l.duration) as mmed label="Durée moyen des emprunts" format=4.,
-		max(l.duration) as mmad label="Durée maximum des emprunts",
-		count(case when l.status="A" then 1 end) as na label="Nombre d'emprunt catégorie A",
-		count(case when l.status="B" then 1 end) as na label="Nombre d'emprunt catégorie B",
-		count(case when l.status="C" then 1 end) as na label="Nombre d'emprunt catégorie C",
-		count(case when l.status="D" then 1 end) as na label="Nombre d'emprunt catégorie D"
+		label="DurÃ©e minimum des emprunts", mean(l.duration) as mmed label="DurÃ©e moyen des emprunts" format=4.,
+		max(l.duration) as mmad label="DurÃ©e maximum des emprunts",
+		count(case when l.status="A" then 1 end) as na label="Nombre d'emprunt catÃ©gorie A",
+		count(case when l.status="B" then 1 end) as na label="Nombre d'emprunt catÃ©gorie B",
+		count(case when l.status="C" then 1 end) as na label="Nombre d'emprunt catÃ©gorie C",
+		count(case when l.status="D" then 1 end) as na label="Nombre d'emprunt catÃ©gorie D"
 	from PROJET.LOAN as l,PROJET.CARD as c,PROJET.ACCOUNT as a,PROJET.DISP as d
 	where l.account_id=a.account_id
 		and d.account_id=a.account_id
@@ -171,8 +169,8 @@ proc sql;
 	;
 quit;
 
-/*8- Par type de carte de crédit et par catégorie d’emprunt, affichez le nombre de compte ayant bénéficié d’un prêt, 
-ainsi que les statistiques quantitatives sur le montant et la durée du prêt. */
+/*8- Par type de carte de crÃ©dit et par catÃ©gorie dâ€™emprunt, affichez le nombre de compte ayant bÃ©nÃ©ficiÃ© dâ€™un prÃªt, 
+ainsi que les statistiques quantitatives sur le montant et la durÃ©e du prÃªt. */
 proc sql;
 	select l.status as status,c.type as type,count(l.account_id) as nce label="Nombre de compte avec un emprunt",
 		mean(l.amount) as mmee label="Montant moyen des emprunts" format=dollar10., 
@@ -180,11 +178,11 @@ proc sql;
 		max(l.amount) as mmae label="Montant maximum des emprunts" format=dollar10.,
 		var(l.amount) as mmae label="Variance des montants",
 		std(l.amount) as mmae label="Ecart moyen des montants",
-		mean(l.duration) as mmed label="Durée moyen des emprunts" format=4.,
-		min(l.duration) as mmid label="Durée minimum des emprunts", 
-		max(l.duration) as mmad label="Durée maximum des emprunts",
-		var(l.duration) as mmae label="Variance des durées",
-		std(l.duration) as mmae label="Ecart moyen des durées"
+		mean(l.duration) as mmed label="DurÃ©e moyen des emprunts" format=4.,
+		min(l.duration) as mmid label="DurÃ©e minimum des emprunts", 
+		max(l.duration) as mmad label="DurÃ©e maximum des emprunts",
+		var(l.duration) as mmae label="Variance des durÃ©es",
+		std(l.duration) as mmae label="Ecart moyen des durÃ©es"
 	from PROJET.LOAN as l,PROJET.CARD as c,PROJET.ACCOUNT as a,PROJET.DISP as d
 	where l.account_id=a.account_id
 		and d.account_id=a.account_id
@@ -194,8 +192,8 @@ proc sql;
 	;
 quit;
 
-/*9- Créez une table nommée « client_macro » qui regroupe les différentes informations des tables « client », 
-« disp » et « card » en y rajoutant une colonne qui calcule l’âge du client au 01 Janvier 2010. On souhaite 
+/*9- CrÃ©ez une table nommÃ©e Â« client_macro Â» qui regroupe les diffÃ©rentes informations des tables Â« client Â», 
+Â« disp Â» et Â« card Â» en y rajoutant une colonne qui calcule lâ€™Ã¢ge du client au 01 Janvier 2010. On souhaite 
 conserver toutes les lignes de la table des clients. Attention aux doublons de nom de colonne, les supprimer 
 ou les renommer si besoin. */
 proc sql;
@@ -215,23 +213,23 @@ quit;
 
 /*Partie 2 : SAS Macro
 
-A-/ Sondage aléatoire simple (AS)
+A-/ Sondage alÃ©atoire simple (AS)
 
 1- Programme ASV1
-Créez un programme SAS sans macro langage qui : crée une variable aléatoire (utiliser la fonction ranuni(0) de SAS), 
-triez par cette variable et crée un échantillon avec les 200 premières observations.*/
-options symbolgen;/*activation de l'option symbolgen pour vérifier avoir plus d'indications sur la résolution des macros*/
+CrÃ©ez un programme SAS sans macro langage qui : crÃ©e une variable alÃ©atoire (utiliser la fonction ranuni(0) de SAS), 
+triez par cette variable et crÃ©e un Ã©chantillon avec les 200 premiÃ¨res observations.*/
+options symbolgen;/*activation de l'option symbolgen pour vÃ©rifier avoir plus d'indications sur la rÃ©solution des macros*/
 
-data PROJET.AVS1;/*création de la table AVS1*/
+data PROJET.AVS1;/*crÃ©ation de la table AVS1*/
 	set PROJET.client_macro;/*a partir de la table client_macro dans la librairie projet*/
-	x = ranuni(0);/*création de la colonne x qui affecte à chaque individu d'une valeur aléatoire entre 0 et 1 */
+	x = ranuni(0);/*crÃ©ation de la colonne x qui affecte Ã  chaque individu d'une valeur alÃ©atoire entre 0 et 1 */
 run;
 
-proc sort data=PROJET.AVS1;/*trie de la table AVS1 en fonction de la variable aléatoire x */
+proc sort data=PROJET.AVS1;/*trie de la table AVS1 en fonction de la variable alÃ©atoire x */
 	by x ;
 run;
 
-data PROJET.AVS1;/*cr&ation de la table AVS1 à partir de l'ancienne table AVS1 en récupérant 200 observations à partir de la première observation*/
+data PROJET.AVS1;/*cr&ation de la table AVS1 Ã  partir de l'ancienne table AVS1 en rÃ©cupÃ©rant 200 observations Ã  partir de la premiÃ¨re observation*/
 	set PROJET.AVS1 (firstobs=1 obs=200);
 run;
 
@@ -239,11 +237,11 @@ proc print data=PROJET.AVS1;/*affichage de la table AVS1*/
 run;
 
 /*2- Programme ASV2
-Reprenez le programme AVS1, toujours sans créer de macro programme, ajouter en paramètre (utilisez « %let ») le 
-nom de la table en entrée et le nom de la table en sortie, la taille de l’échantillon en nombres d’observations.*/
-%let tableint=PROJET.client_macro;/*création de la macro variable tableint qui prend en valeur la table d'entrée qui est ici la table client_macro*/
-%let tableout=PROJET.AVS2;/*création de la macro variable tableout qui prend en valeur la table de sortie qui est ici AVS2*/
-%let nobs=200;/*création de la macro variable nobs qui prend en valeur la taille d'échantillon qui est ici 200*/
+Reprenez le programme AVS1, toujours sans crÃ©er de macro programme, ajouter en paramÃ¨tre (utilisez Â« %let Â») le 
+nom de la table en entrÃ©e et le nom de la table en sortie, la taille de lâ€™Ã©chantillon en nombres dâ€™observations.*/
+%let tableint=PROJET.client_macro;/*crÃ©ation de la macro variable tableint qui prend en valeur la table d'entrÃ©e qui est ici la table client_macro*/
+%let tableout=PROJET.AVS2;/*crÃ©ation de la macro variable tableout qui prend en valeur la table de sortie qui est ici AVS2*/
+%let nobs=200;/*crÃ©ation de la macro variable nobs qui prend en valeur la taille d'Ã©chantillon qui est ici 200*/
 
 data &tableout.;
 	set &tableint.;
@@ -262,9 +260,9 @@ proc print data=&tableout.;
 run;
 
 /*3- Programme ASV3
-Reprenez le programme ASV2 en remplaçant le paramètre nombre d’observation par le pourcentage d’observation. 
-Ainsi la valeur 20 de ce paramètre permettra d’obtenir un échantillon avec 20% des observations de la table d’entrée.*/
-proc sql noprint;/*avec la proc sql on récupère la taille de la table client_macro dans la macro variable numberobs*/
+Reprenez le programme ASV2 en remplaÃ§ant le paramÃ¨tre nombre dâ€™observation par le pourcentage dâ€™observation. 
+Ainsi la valeur 20 de ce paramÃ¨tre permettra dâ€™obtenir un Ã©chantillon avec 20% des observations de la table dâ€™entrÃ©e.*/
+proc sql noprint;/*avec la proc sql on rÃ©cupÃ¨re la taille de la table client_macro dans la macro variable numberobs*/
 	select count(*) as c
 	into : numberobs
 	from PROJET.client_macro
@@ -272,7 +270,7 @@ proc sql noprint;/*avec la proc sql on récupère la taille de la table client_mac
 quit;
 %let tableint=PROJET.client_macro;
 %let tableout=PROJET.AVS3;
-%let pobs=20;/*création de la macro variable pobs qui prend en valeur le pourcentage d'observation*/
+%let pobs=20;/*crÃ©ation de la macro variable pobs qui prend en valeur le pourcentage d'observation*/
 
 data &tableout.;
 	set &tableint.;
@@ -284,7 +282,7 @@ proc sort data=&tableout.;
 run;
 
 data &tableout.;
-	call symput('nobs',%eval(&pobs. * &numberobs. /100));/*création de la macro variable nobs qui permet d'avoir la taille de l'échantillon à partir du pourcentage d'observation et du nombre d'observations de la table*/
+	call symput('nobs',%eval(&pobs. * &numberobs. /100));/*crÃ©ation de la macro variable nobs qui permet d'avoir la taille de l'Ã©chantillon Ã  partir du pourcentage d'observation et du nombre d'observations de la table*/
 	set &tableout. (firstobs=1 obs=&nobs.);
 run;
 
@@ -292,9 +290,9 @@ proc print data=&tableout.;
 run;
 
 /*4- Programme ASV4
-Transformez le programme ASV3 en un macro-programme appelé « %AS », avec les trois paramètres : table en entrée, 
-table en sortie et taux d’échantillonnage.*/
-%macro AS (tableint=, tableout=, pobs=);/*création de la macro avec en paramètre la table en entrée tableint, la table en sortie tableout et le pourcentage d'observation pobs*/
+Transformez le programme ASV3 en un macro-programme appelÃ© Â« %AS Â», avec les trois paramÃ¨tres : table en entrÃ©e, 
+table en sortie et taux dâ€™Ã©chantillonnage.*/
+%macro AS (tableint=, tableout=, pobs=);/*crÃ©ation de la macro avec en paramÃ¨tre la table en entrÃ©e tableint, la table en sortie tableout et le pourcentage d'observation pobs*/
 	proc sql noprint;
 		select count(*) as c
 		into : numberobs
@@ -323,24 +321,24 @@ table en sortie et taux d’échantillonnage.*/
 %AS(tableint=PROJET.client_macro, tableout=PROJET.AVS3, pobs=20);/*on test la macro avec la table client_macro , en sortie la table projet AVS3 et 20 d'observation*/
 
 
-/*B-/ Sondage aléatoire stratifié (ASTR)
+/*B-/ Sondage alÃ©atoire stratifiÃ© (ASTR)
 1- Programme ASTRV01
-Créez un macro programme « %ASTR » qui permet de collecter dans des macro variables le nombre de valeurs prises 
-et les valeurs correspondantes à la variable de stratification choisie. Attention à ne pas prendre en compte les 
+CrÃ©ez un macro programme Â« %ASTR Â» qui permet de collecter dans des macro variables le nombre de valeurs prises 
+et les valeurs correspondantes Ã  la variable de stratification choisie. Attention Ã  ne pas prendre en compte les 
 valeurs manquantes*/
 
-%macro ASTR(tableint=, var_strat=);/*création de la macro ASTR avec en paramètre la table en entrée tableint et la variable de stratification var_strat*/
-	proc sql noprint;/*avec la proc sql on récupère les différentes valeurs prises par la variable de stratification dans les macros variables type (1 au nombre de valeurs prises) et le nombre total de valeur prise par la variable dans la macro variable nv*/
+%macro ASTR(tableint=, var_strat=);/*crÃ©ation de la macro ASTR avec en paramÃ¨tre la table en entrÃ©e tableint et la variable de stratification var_strat*/
+	proc sql noprint;/*avec la proc sql on rÃ©cupÃ¨re les diffÃ©rentes valeurs prises par la variable de stratification dans les macros variables type (1 au nombre de valeurs prises) et le nombre total de valeur prise par la variable dans la macro variable nv*/
     	select distinct &var_strat., count(distinct &var_strat. )
 		into :type1- , :nv
 		from &tableint.
-		where &var_strat. <>""/*on élimine les valeurs manquantes de la table en entrée*/ 
+		where &var_strat. <>""/*on Ã©limine les valeurs manquantes de la table en entrÃ©e*/ 
 		;
 	quit;
 	%put Le nombre de valeur prise est &nv ;/*affichage du nombre de valeur total prise par la variable de stratification*/
 
 	%do i=1 %to &nv.;
-		%put Le type de carte &i est &&type&i;/*affichage des différents modalités prises par la variable de stratification*/
+		%put Le type de carte &i est &&type&i;/*affichage des diffÃ©rents modalitÃ©s prises par la variable de stratification*/
 	%end;
 
 %mend;
@@ -348,11 +346,11 @@ valeurs manquantes*/
 %ASTR(tableint=PROJET.client_macro, var_strat=typecard);/*on teste la macro avec la table client_macro et la variable typecard comme variable de stratification*/
 
 /*2- Programme ASTRV02
-Reprenez macro programme « %ASTR » et y ajoutez une partie qui éclate la table en entrée en strates. Il 
-créera donc une table par strate.*/
+Reprenez macro programme Â« %ASTR Â» et y ajoutez une partie qui Ã©clate la table en entrÃ©e en strates. Il 
+crÃ©era donc une table par strate.*/
 
-%macro ASTR2(tableint=, var_strat=);/*création de la macro ASTR2 avec en paramètre la table en entrée tableint et la variable de stratification var_strat*/
-	proc sql noprint;/*avec la proc sql on récupère les différentes valeurs prises par la variable de stratification dans les macros variables type (1 au nombre de valeurs prises) et le nombre total de valeur prise par la variable dans la macro variable nv*/
+%macro ASTR2(tableint=, var_strat=);/*crÃ©ation de la macro ASTR2 avec en paramÃ¨tre la table en entrÃ©e tableint et la variable de stratification var_strat*/
+	proc sql noprint;/*avec la proc sql on rÃ©cupÃ¨re les diffÃ©rentes valeurs prises par la variable de stratification dans les macros variables type (1 au nombre de valeurs prises) et le nombre total de valeur prise par la variable dans la macro variable nv*/
     	select distinct &var_strat., count(distinct &var_strat.)
 		into :type1- , :nv
 		from &tableint.
@@ -361,7 +359,7 @@ créera donc une table par strate.*/
 	quit;
 	%put Le nombre de valeur prise est &nv ;
 
-	%do i=1 %to &nv.;/*on crée des strates pour chaque valeur prise par la variable de stratification*/
+	%do i=1 %to &nv.;/*on crÃ©e des strates pour chaque valeur prise par la variable de stratification*/
 		%put Le type de carte &i est &&type&i;
 		proc sql noprint;
 			create table PROJET.strate&i. as
@@ -377,10 +375,10 @@ créera donc une table par strate.*/
 %ASTR2(tableint=PROJET.client_macro, var_strat=typecard);
 
 /*3- Programme ASTRV03
-Reprenez le programme ASTRV02 et ajoutez une partie qui crée les sous échantillons (un échantillon pour chaque strate).
+Reprenez le programme ASTRV02 et ajoutez une partie qui crÃ©e les sous Ã©chantillons (un Ã©chantillon pour chaque strate).
 Utiliser la fonction ranuni(0) de SAS en vous inspirant du A-/ */
-%macro ASTR3(tableint=, tableout=, pobs=20, var_strat=);/*création de la macro ASTR3 avec en paramètre la table en entrée tableint, la table en sortie tableout , le pourcentage d'observation qui par défaut est égal à 20 et la variable de stratification var_strat*/
-	proc sql noprint;/*avec la proc sql on récupère les différentes valeurs prises par la variable de stratification dans les macros variables type (1 au nombre de valeurs prises) et le nombre total de valeur prise par la variable dans la macro variable nv*/
+%macro ASTR3(tableint=, tableout=, pobs=20, var_strat=);/*crÃ©ation de la macro ASTR3 avec en paramÃ¨tre la table en entrÃ©e tableint, la table en sortie tableout , le pourcentage d'observation qui par dÃ©faut est Ã©gal Ã  20 et la variable de stratification var_strat*/
+	proc sql noprint;/*avec la proc sql on rÃ©cupÃ¨re les diffÃ©rentes valeurs prises par la variable de stratification dans les macros variables type (1 au nombre de valeurs prises) et le nombre total de valeur prise par la variable dans la macro variable nv*/
     	select distinct &var_strat., count(distinct &var_strat. )
 		into :type1- , :nv 
 		from &tableint.
@@ -432,8 +430,8 @@ Utiliser la fonction ranuni(0) de SAS en vous inspirant du A-/ */
 
 
 /*4- Programme ASTRV04
-Reprenez le programme ASTRV03 et ajoutez une partie qui recolle les sous échantillons en une seule table SAS.*/
-%macro ASTR4(tableint=, tableout=, pobs=20, var_strat=);/*création de la macro ASTR4 avec en paramètre la table en entrée tableint, la table en sortie tableout , le pourcentage d'observation qui par défaut est égal à 20 et la variable de stratification var_strat*/
+Reprenez le programme ASTRV03 et ajoutez une partie qui recolle les sous Ã©chantillons en une seule table SAS.*/
+%macro ASTR4(tableint=, tableout=, pobs=20, var_strat=);/*crÃ©ation de la macro ASTR4 avec en paramÃ¨tre la table en entrÃ©e tableint, la table en sortie tableout , le pourcentage d'observation qui par dÃ©faut est Ã©gal Ã  20 et la variable de stratification var_strat*/
 	proc sql noprint;
     	select distinct &var_strat., count(distinct &var_strat. )
 		into :type1- , :nv
@@ -478,12 +476,12 @@ Reprenez le programme ASTRV03 et ajoutez une partie qui recolle les sous échanti
 
 	%end;
 	
-	data &tableout.;/*on crée une nouvelle table de sortie à partir de la première table echantillonéé*/
+	data &tableout.;/*on crÃ©e une nouvelle table de sortie Ã  partir de la premiÃ¨re table echantillonÃ©Ã©*/
 			set &tableout.1;
 		run;
 	
 	%do i=2 %to &nv.;
-		proc sql noprint;/*on ajoute à la table en sortie les autres tables échantillonées*/
+		proc sql noprint;/*on ajoute Ã  la table en sortie les autres tables Ã©chantillonÃ©es*/
 			insert into &tableout.
 			select *
 			from &tableout.&i.
@@ -498,17 +496,17 @@ Reprenez le programme ASTRV03 et ajoutez une partie qui recolle les sous échanti
 %ASTR4(tableint=PROJET.client_macro,tableout=PROJET.ech, var_strat=typecard);
 
 /*5- Programme ASTRV05
-Reprenez le programme ASTRV04 et ajoutez en paramètre le type de variable de stratification, c’est-à-dire une 
-paramètre qui précise si la variable de stratification est une caractère ou numérique. Modifiez le macro programme 
-en conséquence.*/
-%macro ASTR5(tableint=, tableout=, pobs=20, type_var= , var_strat=, nbstrat=4);/*création de la macro ASTR5 avec en paramètre la table en entrée tableint, la table en sortie tableout , le pourcentage d'observation qui par défaut est égal à 20, le type de variable d'observation ,la variable de stratification var_strat et le nombre de strate désirée qui par défaut est égal à 4 ce qui correspond à regrouper en quartiles*/
-	data _NULL_ ;/*on crée une macro variable qui récupère le type de la variable de stratification*/
+Reprenez le programme ASTRV04 et ajoutez en paramÃ¨tre le type de variable de stratification, câ€™est-Ã -dire une 
+paramÃ¨tre qui prÃ©cise si la variable de stratification est une caractÃ¨re ou numÃ©rique. Modifiez le macro programme 
+en consÃ©quence.*/
+%macro ASTR5(tableint=, tableout=, pobs=20, type_var= , var_strat=, nbstrat=4);/*crÃ©ation de la macro ASTR5 avec en paramÃ¨tre la table en entrÃ©e tableint, la table en sortie tableout , le pourcentage d'observation qui par dÃ©faut est Ã©gal Ã  20, le type de variable d'observation ,la variable de stratification var_strat et le nombre de strate dÃ©sirÃ©e qui par dÃ©faut est Ã©gal Ã  4 ce qui correspond Ã  regrouper en quartiles*/
+	data _NULL_ ;/*on crÃ©e une macro variable qui rÃ©cupÃ¨re le type de la variable de stratification*/
 		set &tableint.;
 		call symput('type',vtype(&var_strat.));
 	run;
-	%if %upcase(&type_var.)=&type. %then /*on compare le type de valeur entrée au type réel de la variable, lorsque les deux correspondent on procède à l'échantillonnage suivant la nature charactère ou numérique de la variable de stratification*/
+	%if %upcase(&type_var.)=&type. %then /*on compare le type de valeur entrÃ©e au type rÃ©el de la variable, lorsque les deux correspondent on procÃ¨de Ã  l'Ã©chantillonnage suivant la nature charactÃ¨re ou numÃ©rique de la variable de stratification*/
 	%do;
-		%if &type.=C %then/*échantillonnage avec une variable charactère*/
+		%if &type.=C %then/*Ã©chantillonnage avec une variable charactÃ¨re*/
 		%do;
 			proc sql noprint;
 				select distinct &var_strat., count(distinct &var_strat. )
@@ -560,36 +558,36 @@ en conséquence.*/
 			proc print data=&tableout.;
 			run;
 		%end;
-		%else %if &type.=N %then /*échantillonnage avec une variable numérique*/
+		%else %if &type.=N %then /*Ã©chantillonnage avec une variable numÃ©rique*/
 		%do;
-			proc sort data=&tableint.;/*on trie la table en entrée suivant la variable de stratification*/
+			proc sort data=&tableint.;/*on trie la table en entrÃ©e suivant la variable de stratification*/
 				by &var_strat. ;
 			run;
-			proc sql noprint;/*on élimine les valeurs manquantes de la table en entrée*/
+			proc sql noprint;/*on Ã©limine les valeurs manquantes de la table en entrÃ©e*/
 				create table &tableint. as 
 				select *
 				from &tableint.
 				where &var_strat. <>"" 
 				;
 			quit; 
-			data _NULL_;/*on récupère dans la macro nb la taille de la table entrée*/
+			data _NULL_;/*on rÃ©cupÃ¨re dans la macro nb la taille de la table entrÃ©e*/
 				set &tableint.;
 				call symput('nb',_N_ );
 				;
 			run;
-			data _NULL_;/*on récupère dans la macro n la taille que dois avoir chaque strate*/
+			data _NULL_;/*on rÃ©cupÃ¨re dans la macro n la taille que dois avoir chaque strate*/
 				set &tableint.;
 				call symput('n',&nb./&nbstrat.);
 			run;
 			%let n1=%eval(&nbstrat.-1);
-			data PROJET.strate1;/*on crée la première strate en prenant les n premiers observations*/
+			data PROJET.strate1;/*on crÃ©e la premiÃ¨re strate en prenant les n premiers observations*/
 				set &tableint.;
 				if 1 <= _N_ < &n.;
 			run;
 			
-			%do i=2 %to &n1.;/*on crée une boucle ou on crée du deuxième à l'avant dernier strates en regroupant les n observations suivantes*/
+			%do i=2 %to &n1.;/*on crÃ©e une boucle ou on crÃ©e du deuxiÃ¨me Ã  l'avant dernier strates en regroupant les n observations suivantes*/
 				%let j=%eval(&i.-1);
-				data PROJET.strate&i.;/*on crée la dernière strate en prenant les n derniers observations*/
+				data PROJET.strate&i.;/*on crÃ©e la derniÃ¨re strate en prenant les n derniers observations*/
 					set &tableint.;
 					if &n.*&j. <= _N_ < &n.*&i.;
 				run;
@@ -635,7 +633,7 @@ en conséquence.*/
 	%end;
 	%else %do;
 		%put le type de variable nest pas juste. veuillez entrer "c" pour une 
-		variable caractere et "n" pour une variable numérique;
+		variable caractere et "n" pour une variable numÃ©rique;
 	%end;
 %mend;
 
@@ -643,9 +641,9 @@ en conséquence.*/
 
 
 /*6- Programme ASTRV06
-Reprenez le programme ASTRV05 en informant l’utilisateur dans le journal des tailles des différents échantillons 
-et de la taille de l’échantillon final.*/
-%macro ASTR6(tableint=, tableout=, pobs=20, type_var= , var_strat=, nbstrat=4);/*création de la macro ASTR5 avec en paramètre la table en entrée tableint, la table en sortie tableout , le pourcentage d'observation qui par défaut est égal à 20, le type de variable d'observation ,la variable de stratification var_strat et le nombre de strate désirée qui par défaut est égal à 4 ce qui correspond à regrouper en quartiles*/
+Reprenez le programme ASTRV05 en informant lâ€™utilisateur dans le journal des tailles des diffÃ©rents Ã©chantillons 
+et de la taille de lâ€™Ã©chantillon final.*/
+%macro ASTR6(tableint=, tableout=, pobs=20, type_var= , var_strat=, nbstrat=4);/*crÃ©ation de la macro ASTR5 avec en paramÃ¨tre la table en entrÃ©e tableint, la table en sortie tableout , le pourcentage d'observation qui par dÃ©faut est Ã©gal Ã  20, le type de variable d'observation ,la variable de stratification var_strat et le nombre de strate dÃ©sirÃ©e qui par dÃ©faut est Ã©gal Ã  4 ce qui correspond Ã  regrouper en quartiles*/
 	data _NULL_ ;
 		set &tableint.;
 		call symput('type',vtype(&var_strat.));
@@ -703,11 +701,11 @@ et de la taille de l’échantillon final.*/
 			%end;
 			proc print data=&tableout.;
 			run;
-			data _NULL_ ;/*on récupère dans la macro ttotal la taille de l'échantillon final*/
+			data _NULL_ ;/*on rÃ©cupÃ¨re dans la macro ttotal la taille de l'Ã©chantillon final*/
 				set &tableout. ;
 				call symput('ttotal',_N_);
 			run;
-			%do i=1 %to &nv.;/*on affiche sucessivement la taille de chaque échantillon récupéré dans la macro variable te*/
+			%do i=1 %to &nv.;/*on affiche sucessivement la taille de chaque Ã©chantillon rÃ©cupÃ©rÃ© dans la macro variable te*/
 				proc sql noprint;
 					select count(*)
 					into :te
@@ -789,11 +787,11 @@ et de la taille de l’échantillon final.*/
 			%end; 
 			proc print data=&tableout.;
 			run;
-			data _NULL_ ;/*on récupère dans la macro ttotal la taille de l'échantillon final*/
+			data _NULL_ ;/*on rÃ©cupÃ¨re dans la macro ttotal la taille de l'Ã©chantillon final*/
 				set &tableout. ;
 				call symput('ttotal',_N_);
 			run;
-			%do i=1 %to &nbstrat.;/*on affiche sucessivement la taille de chaque échantillon récupéré dans la macro variable te*/
+			%do i=1 %to &nbstrat.;/*on affiche sucessivement la taille de chaque Ã©chantillon rÃ©cupÃ©rÃ© dans la macro variable te*/
 				proc sql noprint;
 					select count(*)
 					into :te
@@ -807,7 +805,7 @@ et de la taille de l’échantillon final.*/
 	%end;
 	%else %do;
 		%put le type de variable nest pas juste. veuillez entrer "c" pour une 
-		variable caractere et "n" pour une variable numérique;
+		variable caractere et "n" pour une variable numÃ©rique;
 	%end;
 %mend;
 
